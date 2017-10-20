@@ -1,30 +1,21 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
-import { View, Text } from 'native-base';
+import { Container, Content, Text, StyleProvider } from 'native-base';
+import getTheme from './themes/components';
 
 class App extends Component {
   render = () => (
-    <View style={styles.container}>
-      <Text style={styles.container}>
-        Hello world!
-        (Gainster app)
-      </Text>
-    </View>
+    <StyleProvider style={getTheme()}>
+      <Container>
+        <Content>
+          <Text>
+            Hello world!
+            (Gainster app)
+          </Text>
+        </Content>
+      </Container>
+    </StyleProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  }
-});
 
 export { App };
