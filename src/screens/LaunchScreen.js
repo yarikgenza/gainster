@@ -4,6 +4,8 @@ import { StyleSheet, Image } from 'react-native';
 import { Container, Content, H1, Body, Text, Icon } from 'native-base';
 import theme from '../themes';
 
+import FacebookLogin from '../components/FacebookLogin';
+
 class LaunchScreen extends Component {
   render = () => (
     <Container>
@@ -19,6 +21,7 @@ class LaunchScreen extends Component {
             source={require('../images/logo.png')}
             style={styles.logo}
           />
+          <FacebookLogin />
         </Animatable.Image>
       </Content>
     </Container>
