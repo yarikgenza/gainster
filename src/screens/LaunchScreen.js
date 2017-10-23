@@ -34,7 +34,7 @@ class LaunchScreen extends Component {
     const { isLoading, isAuthorized } = this;
 
     const renderContent = () => isAuthorized ? (
-      <Text>Hello, user!</Text> 
+      <Text> </Text>
     ) : (<FacebookLogin />)
 
     return (
@@ -48,9 +48,16 @@ class LaunchScreen extends Component {
             <Animatable.Image
               animation="flipInX"
               delay={300}
-              source={require('../images/logo.png')}
+              source={require('../images/logo_grey.png')}
               style={styles.logo}
             />
+            <Animatable.Text
+              animation="flipInY"
+              delay={300}
+              style={styles.h1
+            }>
+              GAINSTER
+            </Animatable.Text>
             {isLoading ? (<Spinner color="white" />) : renderContent()}
           </Animatable.Image>
         </Content>
@@ -69,15 +76,15 @@ const styles = StyleSheet.create({
   logo: {
     width: theme.deviceWidth / 2,
     height: theme.deviceWidth / 2,
-    marginTop: theme.deviceHeight / 10,
+    marginTop: theme.deviceHeight / 30,
     alignSelf: 'center',
-  }
-  /* h1: {
+  },
+  h1: {
     color: theme.appNameTextColor,
     fontSize: 50,
     textAlign: 'center',
-    marginTop: theme.deviceHeight / 5
-  }, */
+    marginTop: theme.deviceHeight / 2 - (theme.deviceHeight / 2)
+  },
 });
 
 export default Animatable.createAnimatableComponent(LaunchScreen);

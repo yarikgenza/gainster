@@ -12,7 +12,7 @@ export default {
 
   // custom //
 
-  appNameTextColor: '#fff',
+  appNameTextColor: 'rgb(100,100,100)',
 
   // end custom //
   platformStyle,
