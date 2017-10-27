@@ -2,13 +2,17 @@ import * as Animatable from 'react-native-animatable';
 import React, { Component } from 'react';
 import { StyleSheet, Image, View } from 'react-native';
 import { observable } from 'mobx';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import { Container, Content, Text, Icon, Spinner, Button } from 'native-base';
 import theme from '../themes';
 
 import FacebookLoginButton from '../components/FacebookLoginButton';
-import isUserAuthorized from '../utils/checkFbAuth';
+import {
+    checkFbAuth as isUserAuthorized,
+    getFbUser as getUser
+} from '../utils';
 
+@inject('user')
 @observer
 class LaunchScreen extends Component {
 
@@ -19,6 +23,8 @@ class LaunchScreen extends Component {
     try {
       const isAuthorized = await isUserAuthorized();
       if (isAuthorized) {
+        const user = await getUser();
+        this.props.user.setProfile(user);
         this.isAuthorized = true;
         this.isLoading = false;
       } else {
@@ -34,6 +40,20 @@ class LaunchScreen extends Component {
     const { isLoading, isAuthorized } = this;
 
     const renderContent = () => isAuthorized ? (
+    <View>
+      <View style={styles.welcomeTextContainer}>
+        <Text style={NBstyles.welcomeText}>Hello, {this.props.user.first_name}!</Text>
+      </View>
+      <View style={styles.skipButtonContainer}>
+          <Button style={NBstyles.skipButton} block light>
+            <Text style={NBstyles.buttonText}>
+              Countinue
+            </Text>
+            <Icon name="arrow-round-forward"/>
+          </Button>
+        </View>
+    </View>
+    ) : (<View style={styles.fbButtonContainer}>
       <View>
         <View style={styles.fbButtonContainer}>
           <FacebookLoginButton />
@@ -47,8 +67,6 @@ class LaunchScreen extends Component {
           </Button>
         </View>
       </View>
-    ) : (<View style={styles.fbButtonContainer}>
-      <FacebookLoginButton />
     </View>)
 
     return (
@@ -93,7 +111,12 @@ const NBstyles = {
     fontWeight: 'bold',
     fontSize: 17,
     marginLeft: 50
-  }
+  },
+  welcomeText: {
+    color: 'white',
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
 };
 
 const styles = StyleSheet.create({
@@ -123,6 +146,13 @@ const styles = StyleSheet.create({
     marginTop: theme.deviceHeight / 7,
   },
   skipButtonContainer: {
+    flex:1,
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'center',
+    marginTop: theme.deviceHeight / 10,
+  },
+  welcomeTextContainer: {
     flex:1,
     flexDirection:'row',
     alignItems:'center',
